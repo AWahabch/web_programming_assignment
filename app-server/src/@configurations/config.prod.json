@@ -1,0 +1,20 @@
+{
+  "database": {
+    "connectionString": "mongodb://localhost:27017/flyluf"
+  },
+  "server": {
+    "port": 5000,
+    "jwtSecret": "random-secret-password",
+    "jwtExpiration": "1h",
+    "routePrefix": "/api",
+    "plugins": [
+      "logger",
+      "jwt-auth",
+      "swagger"
+    ],
+    "url": "http://easybooking.com.vn/api"
+  },
+  "upload":{
+    "folder": "uploads"
+  }
+}

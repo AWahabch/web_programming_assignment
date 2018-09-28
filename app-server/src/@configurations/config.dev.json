@@ -1,0 +1,19 @@
+{
+  "database": {
+    "connectionString": "mongodb://localhost:27017/chatting"
+  },
+  "server": {
+    "port": 3000,
+    "jwtSecret": "random-secret-password",
+    "jwtExpiration": "24h",
+    "routePrefix": "/api",
+    "plugins": [
+      "logger",
+      "jwt-auth",
+      "swagger"
+    ]
+  },
+  "upload":{
+    "folder": "uploads"
+  }
+}
