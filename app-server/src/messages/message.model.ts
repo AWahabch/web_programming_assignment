@@ -3,6 +3,8 @@ import * as Bcrypt from "bcryptjs";
 import { Int32 } from "bson";
 
 export interface IMessage extends Mongoose.Document {
+  userId: string;
+  channelId: string;
   content: string;
   image: string;
   createdAt: Date;
