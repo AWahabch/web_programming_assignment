@@ -43,7 +43,22 @@ export default class MessageController {
         try {
             const channelId = request.params['channelId'];
             const messages = await this.database.messageModel.find({ "channelId": channelId });
-            reply(messages);
+            var results = [];
+            await Promise.all(messages.map(async (item) => {
+                var user = await this.database.userModel.findById(item.userId);
+                results.push({
+                    _id: item._id,
+                    content: item.content,
+                    image: item.image,
+                    user:{
+                        id: user._id,
+                        email: user.email,
+                        username: user.username,
+                        imageUrl: user.imageUrl
+                    }
+                });
+            }));
+            reply(results);
         } catch (error) {
             return reply(Boom.badImplementation(error));
         }
