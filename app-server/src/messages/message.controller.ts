@@ -14,12 +14,12 @@ export default class MessageController {
         this.configs = configs;
     }
 
-    public async createMessageFromSocket(userId, channelId, content, image) {
+    public async createMessageFromSocket(userId, channelId, type, content) {
         const model = {
             userId,
             channelId,
-            content,
-            image
+            type,
+            content
         };
         try {
             let message: any = await this.database.messageModel.create(model);
@@ -48,8 +48,8 @@ export default class MessageController {
                 var user = await this.database.userModel.findById(item.userId);
                 results.push({
                     _id: item._id,
+                    type: item.type,
                     content: item.content,
-                    image: item.image,
                     user:{
                         id: user._id,
                         email: user.email,
