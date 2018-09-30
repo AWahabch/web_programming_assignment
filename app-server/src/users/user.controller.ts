@@ -126,41 +126,6 @@ export default class UserController {
         return user;
     }
 
-    public async verifyEmail(request: Hapi.Request, reply: Hapi.ReplyNoContinue) {
-        const token = request.params['token'];
-        Jwt.verify(token, this.configs.jwtSecret, async (err, decoded: any) => {
-            if (decoded === undefined) {
-                return reply(Boom.forbidden('Invalid verification link'));
-            }
-            if (decoded.scope && decoded.scope[0] !== 'Customer') {
-                return reply(Boom.forbidden('Invalid verification link'));
-            }
-
-            try {
-                const user: IUser = await this.database.userModel.findById(decoded.id);
-                if (user === null) {
-                    return reply(Boom.forbidden('Invalid verification link'));
-                }
-                if (user.isVerify === true) {
-                    return reply(Boom.forbidden('Account is verified.'));
-                }
-
-                // Update user
-                user.isVerify = true;
-                const verifiedUser = await user.save();
-
-                return reply({
-                    isSuccess: true,
-                    _id: verifiedUser.id,
-                    email: verifiedUser.email
-                });
-
-            } catch (error) {
-                return reply(Boom.badImplementation(error));
-            }
-        });
-    }
-
     public async listUsers(request: Hapi.Request, reply: Hapi.ReplyNoContinue) {
         try {
             const users = await this.database.userModel.find({});

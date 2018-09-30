@@ -187,12 +187,4 @@ export default function (server: Hapi.Server, serverConfigs: IServerConfiguratio
             }
         }
     });
-
-    server.route({
-        method: 'GET',
-        path: '/users/verify/{token}',
-        config: {
-            handler: userController.verifyEmail
-        }
-    });
 }
