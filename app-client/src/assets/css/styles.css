@@ -1,0 +1,52 @@
+/* You can add global styles to this file, and also import other style files */
+body {    
+    font-family: "Source Sans Pro", sans-serif !important;
+    font-size: 1em;
+    letter-spacing: 0.1px;
+    color: #32465a;
+    text-rendering: optimizeLegibility;
+    text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.004);
+    -webkit-font-smoothing: antialiased;
+    background-color: #f3f2f2;
+}
+
+/* Scroll bar for body */
+body::-webkit-scrollbar {
+    width: 0px;
+}
+
+/*Add style for modal*/
+
+.modal-body{
+    padding: 10px;
+}
+
+.modal-body .row{
+    padding: 10px;
+    margin: 10px;
+}
+
+.modal-body .row label{
+    padding-top: 5px;
+}
+
+table td, table th{
+    line-height: 22px;
+    border: 1px solid rgb(199, 199, 199);
+    padding: 6px;
+}
+table th{
+    background-color: #3897DB;
+    color: white;
+    font-weight: bold;
+}
+
+table td a{
+    cursor: pointer;
+    width: 40px;
+    padding: 5px;
+}
+
+.fa-trash-o{
+    color: red;
+}

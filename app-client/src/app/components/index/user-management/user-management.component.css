@@ -1,0 +1,24 @@
+.username{
+    width: 300px;
+}
+
+.email{
+    width: 300px;
+}
+
+#userManagementModal .modal-content{
+    width: 800px;
+    margin: 0 auto;
+}
+
+.cdk-global-overlay-wrapper, .cdk-overlay-container {
+    z-index: 99999 !important;
+  }
+
+  
+
+.mat-form-field{
+    border: 1px solid #ccc;
+    line-height: 30px;
+    width: 100%;
+}

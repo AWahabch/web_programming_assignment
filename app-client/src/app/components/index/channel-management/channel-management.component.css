@@ -1,0 +1,12 @@
+.group-name{
+    width: 300px;
+}
+
+.channel-name{
+    width: 300px;
+}
+
+#channelManagementModal .modal-content{
+    width: 800px;
+    margin: 0 auto;
+}

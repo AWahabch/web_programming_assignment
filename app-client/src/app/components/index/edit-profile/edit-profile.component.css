@@ -1,0 +1,35 @@
+.modal-title {
+    font-size: 20px;
+}
+
+.hidden{
+    display:none;
+}
+
+label {
+    margin-bottom: 5px;
+}
+
+.message {
+    margin-top: 10px;
+    margin-bottom: 10px;
+    transition: 0.5s;
+}
+
+.center-button{
+    margin-top: 10px;
+    width: 100%;    
+}
+
+img {    
+    width: 75%;
+    margin-left: 12.5%;
+    display: block;
+    border-radius: 50%;    
+    height: auto;    
+    cursor: pointer;
+    -moz-transition: 0.3s border ease;
+    -o-transition: 0.3s border ease;
+    -webkit-transition: 0.3s border ease;
+    transition: 0.3s border ease;
+}

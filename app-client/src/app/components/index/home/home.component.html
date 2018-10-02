@@ -1,0 +1,48 @@
+<app-nav></app-nav>
+<app-side-nav></app-side-nav>
+<app-edit-profile></app-edit-profile>
+<app-group-management></app-group-management>
+<app-send-image></app-send-image>
+<app-channel-management></app-channel-management>
+<app-user-management></app-user-management>
+
+<div class="page-wrapper">
+	<div class="content">
+		<div class="contact-profile">
+			<i class="fa fa-comments" aria-hidden="true"></i>
+			<p>{{currentChannelName}}</p>
+			<!-- <div class="social-media">
+				<i class="fa fa-facebook" aria-hidden="true"></i>
+				<i class="fa fa-twitter" aria-hidden="true"></i>
+				 <i class="fa fa-instagram" aria-hidden="true"></i>
+			</div> -->
+		</div>
+
+		<div class="messages" #chatBox>
+			<ul >
+				<li *ngFor="let message of messages" [ngClass]="message.user.id == currentUserId ? 'sent': 'replies'">
+					<img *ngIf="!message.user.imageUrl" class="profileImg" src="assets/img/anonymous.jpg" alt="" />
+					<img *ngIf="message.user.imageUrl" class="profileImg" src="{{rootImageUrl+message.user.imageUrl}}" alt="" />
+					<div class="username">{{message.user.username}}</div>
+					
+					<p *ngIf="message.type == 'text'">{{message.content}}</p> 
+					<img class="msgImg" *ngIf="message.type == 'image'" src={{message.content}}/> 
+					<!-- <a>{{message.createdAt.split('T')[1].split('.')[0]}}</a> -->
+				</li>
+			</ul>
+			<div style="clear:both;"></div>
+		</div>
+
+		<div class="message-input" *ngIf="currentChannelId">
+			<div class="wrap">
+				<input type="text" placeholder="Write your message..." [(ngModel)]="message" (keyup)="$event.keyCode == 13 && sendTextMessage()"/>
+				<a href="#" data-toggle="modal" data-target="#sendImageModal">
+					<i class="fa fa-paperclip attachment" aria-hidden="true"></i>
+				</a>
+				<button class="submit" (click)="sendTextMessage()">
+					<i class="fa fa-paper-plane" aria-hidden="true"></i>
+				</button>
+			</div>
+		</div>
+	</div>
+</div>

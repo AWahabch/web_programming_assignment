@@ -1,0 +1,64 @@
+<!-- Modal -->
+<!-- Trigger from nav -->
+<div id="channelManagementModal" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h3 class="modal-title">Channel Management</h3>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-1">
+                        <label for="name">Name</label>
+                    </div>
+                    <div class="col-md-3">
+                        <input type="text" class="form-control"  [(ngModel)]="channel.name">
+                        <input type="hidden" class="form-control"  [(ngModel)]="channel.id">
+                    </div>
+                    <div class="col-md-1">
+                        <label for="name">Group</label>
+                    </div>
+                    <div class="col-md-3">
+                        <select class="form-control" [(ngModel)]="channel.group&&channel.group.id">
+                            <option *ngFor="let group of groups; let itemIndex = index" [selected]="itemIndex == 0" [ngValue]="group.id">{{group.name}}</option>
+                        </select>
+                    </div>
+                    <div class="col-md-2">
+                        <button [ngClass]="editting ? 'hidden': 'btn btn-primary'" (click)="onSave()">Add</button>
+                        <button [ngClass]="editting ? 'btn btn-primary': 'hidden'" (click)="onSave()">Edit</button>
+                    </div>
+                </div>
+                <div class="row">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>Group</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let i of channels;let index = index">
+                                <td class="channel-name">{{i.name}}</td>
+                                <td class="group-name">{{i.group.name}}</td>
+                                <td>
+                                    <a (click)="edit(i)">
+                                        <i class="fa fa-edit"></i>
+                                    </a>
+                                    <a (click)="onDelete(i.id)">
+                                        <i class="fa fa-trash-o"></i>
+                                    </a>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>

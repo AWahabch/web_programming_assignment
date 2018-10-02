@@ -1,0 +1,33 @@
+.login-panel {
+    margin-top:80px;  
+    width: 24%;
+    margin-left: 38%;    
+}
+
+hr{
+    background-color: #81a5ca;
+    height: 0.5px; 
+    border: 0;    
+}
+
+h1 {
+    font-size:30px !important;
+}
+
+label {
+    margin-bottom: 5px !important;
+}
+
+span {
+    background: #2c3e50;
+    border: 0px; 
+}
+
+i {
+    color: white;
+}
+
+.btn{
+    margin-top: 20px;
+    transition: 0.5s;
+}

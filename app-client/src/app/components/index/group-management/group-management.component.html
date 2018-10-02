@@ -1,0 +1,54 @@
+<!-- Modal -->
+<!-- Trigger from nav -->
+<div id="groupManagementModal" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h3 class="modal-title">Group Management</h3>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-3">
+                        <label for="name">Name</label>
+                    </div>
+                    <div class="col-md-6">
+                        <input type="text" class="form-control" [(ngModel)]="group.name">
+                        <input type="hidden" class="form-control" [(ngModel)]="group.id">
+                    </div>
+                    <div class="col-md-3">
+                        <button [ngClass]="editting ? 'hidden': 'btn btn-primary'" (click)="onSave()">Add</button>
+                        <button [ngClass]="editting ? 'btn btn-primary': 'hidden'" (click)="onSave()">Edit</button>
+                    </div>
+                </div>
+                <div class="row">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let i of groups;let index = index">
+                                <td class="group-name">{{groups[index].name}}</td>
+                                <td>
+                                    <a (click)="edit(i)">
+                                        <i class="fa fa-edit"></i>
+                                    </a>
+                                    <a (click)="onDelete(i.id)">
+                                        <i class="fa fa-trash-o"></i>
+                                    </a>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>

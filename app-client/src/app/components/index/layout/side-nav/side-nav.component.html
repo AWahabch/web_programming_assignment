@@ -1,0 +1,41 @@
+<div class="collapse navbar-collapse navbar-ex1-collapse">
+    <ul class="nav navbar-nav side-nav">
+        <div class="profile">
+            <div class="wrap">
+                <img class="profile-img online"  src="{{imageProfile}}" alt="" />
+                <p>{{username}}</p>
+            </div>
+        </div>
+        <div class="search">
+            <label for=""><i class="fa fa-search" aria-hidden="true"></i></label>
+            <input type="text" placeholder="Search channels" />
+        </div>
+
+        <div class="channels">
+            <li *ngFor="let group of groups">
+                <a href="#{{group.id}}" data-toggle="collapse" [ngClass]="group.id == currentGroupId ? 'active': ''"> 
+                    {{group.name}} <i class="fa fa-fw fa-caret-down"></i>
+                </a>
+                <ul id="{{group.id}}" [ngClass]="group.id == currentGroupId ? 'collapse in': 'collapse'">
+                    <li *ngFor="let channel of group.channels">
+                        <a (click)="chooseChannel(group.id, channel.id)" [ngClass]="channel.id == currentChannelId ? 'active': ''">{{channel.name}}</a>
+                    </li>
+                </ul>
+            </li>
+            <hr *ngIf="hasGroupAdminPer">
+            <li *ngIf="hasGroupAdminPer">
+                <a data-toggle="modal" data-target="#groupManagementModal">                     
+                    <i class="fa fa-american-sign-language-interpreting fa-fw"></i>&nbsp;Manage groups                    
+                </a>
+                <a data-toggle="modal" data-target="#channelManagementModal">                     
+                    <i class="fa fa-bullhorn fa-fw"></i>&nbsp;Manage channels
+                </a>
+                <a data-toggle="modal" data-target="#userManagementModal">                     
+                    <i class="fa fa-user-plus fa-fw"></i>&nbsp;Manage users
+                </a>                
+            </li>                    
+        </div>    
+    </ul>    
+</div>
+<!-- /.navbar-collapse -->
+

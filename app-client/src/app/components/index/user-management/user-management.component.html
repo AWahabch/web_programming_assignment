@@ -1,0 +1,86 @@
+<!-- Modal -->
+<!-- Trigger from nav -->
+<div id="userManagementModal" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h3 class="modal-title">User Management</h3>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-2">
+                        <label for="name">Username</label>
+                    </div>
+                    <div class="col-md-4">
+                        <input type="text" class="form-control" [(ngModel)]="user.username" [attr.disabled]="editting ? '' : null">
+                        <input type="hidden" class="form-control" [(ngModel)]="user.id">
+                    </div>
+                    <div class="col-md-2">
+                        <label for="name">Email</label>
+                    </div>
+                    <div class="col-md-4">
+                        <input type="text" class="form-control" [(ngModel)]="user.email">
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-2">
+                        <label for="name">Password</label>
+                    </div>
+                    <div class="col-md-4">
+                        <input type="password" class="form-control" [(ngModel)]="user.password" [attr.disabled]="editting ? '' : null">
+                    </div>
+                    <div class="col-md-2" *ngIf="hasSuperAdminPer">
+                        <label for="name">Role</label>
+                    </div>
+                    <div class="col-md-4" *ngIf="hasSuperAdminPer">
+                        <angular4-multiselect [data]="roles" [(ngModel)]="selectedRoles" [settings]="roleDropdownSetting">
+                        </angular4-multiselect>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-2">
+                        <label for="name">Channel</label>
+                    </div>
+                    <div class="col-md-4">
+                        <angular4-multiselect [data]="channels" [(ngModel)]="selectedChannels" [settings]="channelDropdownSetting">
+                        </angular4-multiselect>
+                    </div>
+                    <div class="col-md-2">
+                        <button [ngClass]="editting ? 'hidden': 'btn btn-primary'" (click)="onSave()">Add</button>
+                        <button [ngClass]="editting ? 'btn btn-primary': 'hidden'" (click)="onSave()">Edit</button>
+                    </div>
+                </div>
+                <div class="row">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Username</th>
+                                <th>Email</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let user of users;let index = index">
+                                <td class="username">{{user.username}}</td>
+                                <td class="email">{{user.email}}</td>
+                                <td>
+                                    <a (click)="edit(user)">
+                                        <i class="fa fa-edit"></i>
+                                    </a>
+                                    <a (click)="onDelete(user.id)">
+                                        <i class="fa fa-trash-o"></i>
+                                    </a>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
