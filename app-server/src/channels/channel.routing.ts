@@ -46,7 +46,7 @@ export default function (server: Hapi.Server, serverConfigs: IServerConfiguratio
 
     server.route({
         method: 'DELETE',
-        path: '/channels',
+        path: '/channels/{id}',
         config: {
             handler: channelController.deleteChannel,
             auth: "jwt",
@@ -60,9 +60,6 @@ export default function (server: Hapi.Server, serverConfigs: IServerConfiguratio
         path: '/channels',
         config: {
             handler: channelController.updateChannel,
-            validate: {
-                payload: ChannelValidator.updateChannelModel,
-            },
             auth: "jwt",
             tags: ['api', 'channels'],
             description: 'Update channel info.',

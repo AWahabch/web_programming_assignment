@@ -39,7 +39,7 @@ export default class ChannelController {
 
     public async deleteChannel(request: Hapi.Request, reply: Hapi.ReplyNoContinue) {
         try {
-            const id = request.payload['_id'];
+            const id = request.params['id'];
             let channel: IChannel = await this.database.channelModel.findByIdAndRemove(id);
             return reply();
         } catch (error) {
@@ -66,7 +66,7 @@ export default class ChannelController {
 
     public async listChannel(request: Hapi.Request, reply: Hapi.ReplyNoContinue) {
         try {
-            const channels = await this.database.channelModel.find({});
+            const channels = await this.database.channelModel.find({}).sort({ createdAt: 1});
             var results = [];
             await Promise.all(channels.map(async (item) => {
                 var group = await this.database.groupModel.findById(item.groupId);
@@ -86,7 +86,7 @@ export default class ChannelController {
     public async listChannelByGroup(request: Hapi.Request, reply: Hapi.ReplyNoContinue) {
         try {
             const groupId = request.params['groupId'];
-            const channels = await this.database.channelModel.find({ "groupId": groupId });
+            const channels = await this.database.channelModel.find({ "groupId": groupId }).sort({ createdAt: 1});
             reply(channels);
         } catch (error) {
             return reply(Boom.badImplementation(error));
