@@ -79,7 +79,7 @@ export class HomeComponent implements OnInit {
     this.rootImageUrl = this.BASE_URL + '/users/image/';
     this.chatService.getMessages().subscribe((message) => {
       var msg = JSON.parse(message);
-      if (msg.channelId == this.currentChannelId){
+      if (msg.channel.channelId == this.currentChannelId){
         this.messages.push(msg);
         var _a = this;
           setTimeout(function () {
