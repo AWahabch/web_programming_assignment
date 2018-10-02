@@ -16,6 +16,7 @@ exports.message = async function (serverConfigs, database, socket, message) {
     messageController.createMessageFromSocket(userId, channelId, type, content);
     const fullMsg = {
         user: {
+            id: userId,
             username: user.username,
             email: user.email,
             imageUrl: user.imageUrl,
