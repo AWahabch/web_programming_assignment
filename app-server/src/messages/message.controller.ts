@@ -55,9 +55,19 @@ export default class MessageController {
                         email: user.email,
                         username: user.username,
                         imageUrl: user.imageUrl
-                    }
+                    },
+                    createdAt: item.createdAt
                 });
             }));
+            results = results.sort(function (a, b) {
+                if (a.createdAt < b.createdAt) {
+                    return -1;
+                }
+                if (a.createdAt > b.createdAt) {
+                    return 1;
+                }
+                return 0;
+            });
             reply(results);
         } catch (error) {
             return reply(Boom.badImplementation(error));
