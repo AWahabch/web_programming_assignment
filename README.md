@@ -706,3 +706,48 @@ export interface IUserChannel extends Mongoose.Document {
 
   •	Returns successful logged in message.
 
+
+# Angular Architecture
+
+## Components
+
+### Login
+
+  Login component makes for one of the two pages of the website and it allows the user to enter in their username 
+  password in the input fields. The login component uses the Authentication Service to authenticate the user.
+  If the user is authenticated, the router navigates to the home page.
+ 
+### Logout
+
+  The logout component has no html and simply reroutes the user to the login page using the Authentication Service.
+  
+  
+## Home 
+
+  The home component makes up for the chatting part of the second page of the web app, with many connecting modal components (such as 
+  the side navigation). On initialisation this component communicates with the Chat Service to display all the messages for 
+  the current selected channel. Messages can be sent in this component using the Chat Service also.
+  
+## Edit Profile
+
+  This modal takes care of the profile editing, here you can edit the profile picture, note that its validity
+  is checked (i.e. can upload .jpeg but not a .txt file). Other checks include file name length (max 15) and file size (max 1mb).
+ 
+## Channel Management 
+
+  This modal allows the user to create, edit and delete channels belonging to specific groups. All the functionality 
+  comes from the Channel Service.
+  
+## Group Management
+
+  This modal is the same as the above but for the groups, and all the functionality comes from the Group Service.
+  
+## User Management
+
+  This modal is the same as the above but for the users, and all the functionality comes from the Users Service.
+  
+## Navigation
+
+  Two modals are here, on the top navigation the username is taken from local storage, when clicked on it will show
+  the user options and changes to the other modal when edit profile is clicked on for example. The Side navigation
+  displays all the available groups and channels.
