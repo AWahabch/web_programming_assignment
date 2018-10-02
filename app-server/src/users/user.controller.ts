@@ -2,6 +2,7 @@ import * as Hapi from "hapi";
 import * as Boom from "boom";
 import * as Jwt from "jsonwebtoken";
 import { IUser } from "./user.model";
+import { IUserRole } from "../userRoles/userRole.model";
 import { IDatabase } from "../database";
 import { IServerConfigurations } from "../@configurations";
 import { uploader } from "../@common/image";
@@ -72,6 +73,41 @@ export default class UserController {
         }
     }
 
+    public async saveRoles(request: Hapi.Request, reply: Hapi.ReplyNoContinue) {
+        const model = request.payload;
+        try {
+            let result = await this.database.userRoleModel.deleteMany({ "userId": model._id });
+            var roles = JSON.parse(model.roles);
+            roles.forEach(role => {
+                let userRole: any = { "userId": model._id, "roleId": role.id };
+                this.database.userRoleModel.create(userRole);
+            });
+            return reply({
+                message: 'ok'
+            });
+        } catch (error) {
+            return reply(Boom.badImplementation(error));
+        }
+    }
+
+    public async saveChannels(request: Hapi.Request, reply: Hapi.ReplyNoContinue) {
+        const model = request.payload;
+        try {
+            let result = await this.database.userChannelModel.deleteMany({ "userId": model._id });
+            console.log(result);
+            var channels = JSON.parse(model.channels);
+            channels.forEach(channel => {
+                let userChannel: any = { "userId": model._id, "channelId": channel.id };
+                this.database.userChannelModel.create(userChannel);
+            });
+            return reply({
+                message: 'ok'
+            });
+        } catch (error) {
+            return reply(Boom.badImplementation(error));
+        }
+    }
+
     public async updateUserImage(request: Hapi.Request, reply: Hapi.ReplyNoContinue) {
         const model = request.payload;
         try {
@@ -97,10 +133,9 @@ export default class UserController {
     }
 
     public async updateUser(request: Hapi.Request, reply: Hapi.ReplyNoContinue) {
-        const id = request.auth.credentials.id;
-
+        const model: IUser = request.payload;
         try {
-            let user: IUser = await this.database.userModel.findByIdAndUpdate(id, { $set: request.payload }, { new: true });
+            let user: IUser = await this.database.userModel.findByIdAndUpdate(model._id, { $set: request.payload }, { new: true });
             return reply(user);
         } catch (error) {
             return reply(Boom.badImplementation(error));
@@ -108,7 +143,7 @@ export default class UserController {
     }
 
     public async deleteUser(request: Hapi.Request, reply: Hapi.ReplyNoContinue) {
-        const id = request.auth.credentials.id;
+        const id = request.params['id'];
         let user: IUser = await this.database.userModel.findByIdAndRemove(id);
 
         return reply(user);
@@ -129,7 +164,35 @@ export default class UserController {
     public async listUsers(request: Hapi.Request, reply: Hapi.ReplyNoContinue) {
         try {
             const users = await this.database.userModel.find({});
-            reply(users);
+            var results = [];
+            await Promise.all(users.map(async (item) => {
+                var channels = [];
+                var roles = [];
+                var userChannels = await this.database.userChannelModel.find({ "userId": item._id });
+                if (userChannels && userChannels.length > 0) {
+                    await Promise.all(userChannels.map(async (userChannel) => {
+                        var channel = await this.database.channelModel.findById(userChannel.channelId);
+                        channels.push(channel);
+                    }));
+                }
+                var userRoles = await this.database.userRoleModel.find({ "userId": item._id });
+                if (userRoles && userRoles.length > 0) {
+                    await Promise.all(userRoles.map(async (userRole) => {
+                        var role = await this.database.roleModel.findById(userRole.roleId);
+                        roles.push(role);
+                    }));
+                }
+                results.push({
+                    _id: item._id,
+                    username: item.username,
+                    email: item.email,
+                    password: item.password,
+                    imageUrl: item.imageUrl,
+                    channels: channels,
+                    roles: roles
+                });
+            }));
+            reply(results);
         } catch (error) {
             return reply(Boom.badImplementation(error));
         }

@@ -65,7 +65,7 @@ export default function (server: Hapi.Server, serverConfigs: IServerConfiguratio
 
     server.route({
         method: 'DELETE',
-        path: '/users',
+        path: '/users/{id}',
         config: {
             handler: userController.deleteUser,
             auth: "jwt",
@@ -98,7 +98,7 @@ export default function (server: Hapi.Server, serverConfigs: IServerConfiguratio
             tags: ['api', 'users'],
             description: 'Update current user info.',
             validate: {
-                payload: UserValidator.updateUserModel,
+                //payload: UserValidator.updateUserModel,
                 headers: UserValidator.jwtValidator
             },
             plugins: {
@@ -151,9 +151,44 @@ export default function (server: Hapi.Server, serverConfigs: IServerConfiguratio
             handler: userController.createUser,
             tags: ['api', 'users'],
             description: 'Create a user.',
-            validate: {
-                payload: UserValidator.createUserModel
-            },
+            plugins: {
+                'hapi-swagger': {
+                    responses: {
+                        '201': {
+                            'description': 'User created.'
+                        }
+                    }
+                }
+            }
+        }
+    });
+
+    server.route({
+        method: 'POST',
+        path: '/users/saveRoles',
+        config: {
+            handler: userController.saveRoles,
+            tags: ['api', 'users'],
+            description: 'Save roles for a user.',
+            plugins: {
+                'hapi-swagger': {
+                    responses: {
+                        '201': {
+                            'description': 'User created.'
+                        }
+                    }
+                }
+            }
+        }
+    });
+
+    server.route({
+        method: 'POST',
+        path: '/users/saveChannels',
+        config: {
+            handler: userController.saveChannels,
+            tags: ['api', 'users'],
+            description: 'Save channels for a user.',
             plugins: {
                 'hapi-swagger': {
                     responses: {
